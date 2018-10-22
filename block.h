@@ -10,6 +10,8 @@
  */
 #pragma once
 
+#include "transaction.h"
+
 using namespace std;
 
 struct Transaction;

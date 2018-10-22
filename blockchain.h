@@ -13,9 +13,12 @@
 
 #include <vector>
 
+#include "transaction.h"
+#include "block.h"
 using namespace std;
 
-class CBlock;
+typedef vector<CBlock> VBlock;
+typedef vector<CBlock>::iterator VIT_Block;
 
 class CBlockchain {
 
@@ -24,23 +27,16 @@ public:
     ~CBlockchain();
 
 public:
-    CBlock* getLatestBlock();
-    
+    CBlock* getLatestBlock();    
 
-    void addBlock();        // ブロックの追加.
+    void addBlock(Transaction data);        // ブロックの追加.
     bool isChainValid();    // 有効なチェーンかチェック.
+private:
+    CBlock createGenesisBlock();
 
 public:
-    vector<CBlock>  chain;  // ブロックチェーン.
+    VBlock  chain;  // ブロックチェーン.
 
 private:
 
 };
-
-CBlockchain::CBlockchain(/* args */)
-{
-}
-
-CBlockchain::~CBlockchain()
-{
-}
