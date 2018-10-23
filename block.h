@@ -19,7 +19,7 @@ struct Transaction;
 class CBlock {
 
 public:
-    CBlock(int index, Transaction data, size_t prevHash);
+    CBlock(int index, Transaction data, string prevHash);
     ~CBlock();
 
     void print();
@@ -27,8 +27,8 @@ public:
 public:
     // getter.
     int     getIndex()  { return index; }
-    size_t  getHash()   { return blockHash; }
-    size_t  getPrevHash() { return prevHash; }
+    string  getHash()   { return blockHash; }
+    string  getPrevHash() { return prevHash; }
 
     // Hashが有効かチェック.
     bool    isHashValid();
@@ -37,12 +37,12 @@ public:
     void    mineBlock(int difficulty);
 
 private:
-    size_t  generateHash();
+    string  generateHash();
 
 private:
     int         index;      // ブロック番号.
-    size_t      blockHash;  // ブロックのハッシュ値.
-    size_t      prevHash;   // 前ブロックのハッシュ値.
+    string      blockHash;  // ブロックのハッシュ値.
+    string      prevHash;   // 前ブロックのハッシュ値.
     Transaction transaction;// 含まれるトランザクションデータ.
     uint64_t    nonce;      // マイニングのためのナンス値.
 };

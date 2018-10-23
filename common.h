@@ -20,6 +20,8 @@
 #include <list>
 #include <map>
 
+#include <openssl/sha.h>
+
 using namespace std;
 
 #define IS_VALID(val, min, max) ( min <= val && val < max )

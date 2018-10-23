@@ -1,5 +1,7 @@
 
+#include "common.h"
 #include "blockchain.h"
+#include "sha256.h"
 
 int main(int argc, char** argv) {
 
@@ -11,7 +13,6 @@ int main(int argc, char** argv) {
     trans1.receiverKey = "Bob";
     trans1.timestamp = time(NULL);
     chain.addBlock(trans1);
-
 
     Transaction trans2;
     trans2.amount = 200;

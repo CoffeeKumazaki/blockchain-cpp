@@ -11,14 +11,16 @@
 
 #include "common.h"
 
+#include "sha256.h"
 #include "block.h"
 #include "blockchain.h"
 
 CBlockchain::CBlockchain()
-: difficulty(3)
+: difficulty(4)
 {
 
     CBlock genesisBlock = createGenesisBlock();
+    genesisBlock.mineBlock(difficulty);
     chain.push_back(genesisBlock);
 }
 
@@ -35,7 +37,7 @@ CBlock CBlockchain::createGenesisBlock() {
     genesisTransaction.timestamp = time(NULL);
 
     hash<int> hash1;
-    CBlock genesisBlock(0, genesisTransaction, hash1(0));
+    CBlock genesisBlock(0, genesisTransaction, string(sha256("0").length(), '0'));
 
     return genesisBlock;
 }
@@ -63,7 +65,10 @@ void CBlockchain::addBlock(Transaction data) {
     int index = getLatestBlock()->getIndex() + 1;
     CBlock newBlock(index, data, getLatestBlock()->getHash());
     newBlock.mineBlock(difficulty);
-    chain.push_back(newBlock);
+
+    if (newBlock.isHashValid()) { 
+        chain.push_back(newBlock);
+    }
 }
 
 bool CBlockchain::isChainValid() {
