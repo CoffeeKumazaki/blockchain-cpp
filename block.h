@@ -22,6 +22,8 @@ public:
     CBlock(int index, Transaction data, size_t prevHash);
     ~CBlock();
 
+    void print();
+
 public:
     // getter.
     int     getIndex()  { return index; }

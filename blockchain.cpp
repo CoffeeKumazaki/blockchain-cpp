@@ -20,6 +20,10 @@ CBlockchain::CBlockchain() {
     chain.push_back(genesisBlock);
 }
 
+CBlockchain::~CBlockchain() {
+
+}
+
 CBlock CBlockchain::createGenesisBlock() {
 
     Transaction genesisTransaction;
@@ -40,8 +44,9 @@ CBlock* CBlockchain::getLatestBlock() {
 
 void CBlockchain::addBlock(Transaction data) {
 
-    int index = chain.size() + 1;
+    int index = getLatestBlock()->getIndex() + 1;
     CBlock newBlock(index, data, getLatestBlock()->getHash());
+    chain.push_back(newBlock);
 }
 
 bool CBlockchain::isChainValid() {
@@ -61,4 +66,13 @@ bool CBlockchain::isChainValid() {
 
     return true;
     
+}
+
+
+void CBlockchain::print() {
+
+    for ( VIT_Block it = chain.begin(), itEnd = chain.end(); it != itEnd; ++it  ) {
+        CBlock block = (*it);
+        block.print();
+    }
 }

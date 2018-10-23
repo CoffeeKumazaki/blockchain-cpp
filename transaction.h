@@ -12,6 +12,7 @@
 
 #include <ctime>
 #include <string>
+#include <iostream>
 
 using namespace std;
 
@@ -26,5 +27,13 @@ struct Transaction {
         senderKey = "";
         receiverKey = "";
         timestamp = 0;
+    }
+
+    void print() { 
+        cout << " transaction -- " << endl;
+        cout << "   amount      : " << amount << endl;
+        cout << "   senderKey   : " << senderKey << endl;
+        cout << "   receiverKey : " << receiverKey << endl;
+        cout << "   timestamp   : " << timestamp << endl;
     }
 };

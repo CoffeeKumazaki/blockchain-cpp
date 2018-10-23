@@ -26,11 +26,13 @@ public:
     CBlockchain();
     ~CBlockchain();
 
-public:
-    CBlock* getLatestBlock();    
+    void print();
 
-    void addBlock(Transaction data);        // ブロックの追加.
-    bool isChainValid();    // 有効なチェーンかチェック.
+public:
+    CBlock* getLatestBlock();           // 最新のブロック取得.
+
+    void addBlock(Transaction data);    // ブロックの追加.
+    bool isChainValid();                // 有効なチェーンかチェック.
 private:
     CBlock createGenesisBlock();
 

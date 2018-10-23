@@ -40,3 +40,12 @@ bool    CBlock::isHashValid() {
 
     return generateHash() == blockHash;
 }
+
+void    CBlock::print() {
+
+    cout << "----" << endl;
+    cout << " index     : " << index << endl;
+    cout << " prevHash  : " << prevHash << endl;
+    cout << " blockHash : " << blockHash << endl;
+    transaction.print();
+}
