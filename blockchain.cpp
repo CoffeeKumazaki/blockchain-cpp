@@ -14,7 +14,9 @@
 #include "block.h"
 #include "blockchain.h"
 
-CBlockchain::CBlockchain() {
+CBlockchain::CBlockchain()
+: difficulty(3)
+{
 
     CBlock genesisBlock = createGenesisBlock();
     chain.push_back(genesisBlock);
@@ -60,6 +62,7 @@ void CBlockchain::addBlock(Transaction data) {
 
     int index = getLatestBlock()->getIndex() + 1;
     CBlock newBlock(index, data, getLatestBlock()->getHash());
+    newBlock.mineBlock(difficulty);
     chain.push_back(newBlock);
 }
 

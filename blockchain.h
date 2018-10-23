@@ -39,7 +39,8 @@ private:
     CBlock createGenesisBlock();
 
 public:
-    VBlock  chain;  // ブロックチェーン.
+    VBlock      chain;  // ブロックチェーン.
+    uint32_t    difficulty;
 
 private:
 

@@ -33,6 +33,9 @@ public:
     // Hashが有効かチェック.
     bool    isHashValid();
 
+    // ブロックのマイニング.
+    void    mineBlock(int difficulty);
+
 private:
     size_t  generateHash();
 
@@ -41,4 +44,5 @@ private:
     size_t      blockHash;  // ブロックのハッシュ値.
     size_t      prevHash;   // 前ブロックのハッシュ値.
     Transaction transaction;// 含まれるトランザクションデータ.
+    uint64_t    nonce;      // マイニングのためのナンス値.
 };

@@ -17,8 +17,8 @@ CBlock::CBlock(int _index, Transaction _data, size_t _prevHash)
 : index(_index)
 , transaction(_data)
 , prevHash(_prevHash)
+, nonce(0)
 {
-    blockHash = generateHash();
 }
 
 CBlock::~CBlock() {
@@ -40,6 +40,17 @@ bool    CBlock::isHashValid() {
 
     return generateHash() == blockHash;
 }
+
+void  CBlock::mineBlock(int difficulty) {
+
+    string header(difficulty, '0');
+
+    while ( to_string(this->blockHash).compare(0, difficulty, header) != 0 ) {
+        this->blockHash = generateHash();
+        nonce++;
+    }
+}
+
 
 void    CBlock::print() {
 
