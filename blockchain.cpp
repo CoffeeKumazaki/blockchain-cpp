@@ -20,7 +20,6 @@ CBlockchain::CBlockchain()
 {
 
     CBlock genesisBlock = createGenesisBlock();
-    genesisBlock.mineBlock(difficulty);
     chain.push_back(genesisBlock);
 }
 
@@ -38,6 +37,7 @@ CBlock CBlockchain::createGenesisBlock() {
 
     hash<int> hash1;
     CBlock genesisBlock(0, genesisTransaction, string(sha256("0").length(), '0'));
+    genesisBlock.mineBlock(difficulty);
 
     return genesisBlock;
 }
