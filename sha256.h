@@ -1,0 +1,10 @@
+#pragma once
+
+#include <sstream>
+#include <string>
+#include <iomanip>
+#include <openssl/sha.h>
+
+using namespace std;
+
+string sha256(const string str);
