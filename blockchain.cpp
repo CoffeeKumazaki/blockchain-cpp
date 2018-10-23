@@ -38,6 +38,20 @@ CBlock CBlockchain::createGenesisBlock() {
     return genesisBlock;
 }
 
+int CBlockchain::getBlockHeight() {
+    return chain.size();
+}
+
+CBlock* CBlockchain::getBlock(int index) {
+
+    int height = getBlockHeight();
+    if (IS_VALID(index, 0, height)) {
+        return &chain[index];
+    }
+
+    return NULL;
+}
+
 CBlock* CBlockchain::getLatestBlock() {
     return &chain.back();
 }

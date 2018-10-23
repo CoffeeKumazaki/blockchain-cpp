@@ -21,3 +21,5 @@
 #include <map>
 
 using namespace std;
+
+#define IS_VALID(val, min, max) ( min <= val && val < max )

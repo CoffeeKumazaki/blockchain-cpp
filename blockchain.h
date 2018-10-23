@@ -29,6 +29,8 @@ public:
     void print();
 
 public:
+    int     getBlockHeight();           // ブロック数取得.
+    CBlock* getBlock(int index);        // 指定番号のブロック取得. 
     CBlock* getLatestBlock();           // 最新のブロック取得.
 
     void addBlock(Transaction data);    // ブロックの追加.
