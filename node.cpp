@@ -20,7 +20,7 @@ CNode::CNode()
 {
     pendingTransactions.clear();
     CBlock genesisBlock = createGenesisBlock();
-    mineBlock();    
+    chain.push_back(genesisBlock);
 }
 
 CNode::~CNode() {
@@ -34,10 +34,11 @@ CBlock CNode::createGenesisBlock() {
     genesisTransaction.senderKey = "None";
     genesisTransaction.receiverKey = "None";
     genesisTransaction.timestamp = time(NULL);
-
-    hash<int> hash1;
-    CBlock genesisBlock(0, string(sha256("0").length(), '0'));
     broadcastTransaction(genesisTransaction);
+
+    CBlock genesisBlock(0, INVALID_HASH);
+    genesisBlock.mineBlock( difficulty, pendingTransactions);
+    pendingTransactions.clear();
 
     return genesisBlock;
 }
@@ -69,8 +70,8 @@ CBlock* CNode::getLatestBlock() {
 void CNode::mineBlock() {
 
     CBlock* pBlock = getLatestBlock();
-    int index = pBlock ? pBlock->getIndex() + 1 : 0;
-    CBlock newBlock(index, pBlock ? getLatestBlock()->getHash() : INVALID_HASH);
+    int index = pBlock->getIndex() + 1;
+    CBlock newBlock(index, pBlock->getHash());
     newBlock.mineBlock(difficulty, pendingTransactions);
 
     if (newBlock.isHashValid()) { 
