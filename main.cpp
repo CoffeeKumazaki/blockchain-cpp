@@ -1,11 +1,11 @@
 
 #include "common.h"
-#include "blockchain.h"
+#include "node.h"
 #include "sha256.h"
 
 int main(int argc, char** argv) {
 
-    CBlockchain  chain;
+    CNode  chain;
 
     Transaction trans1;
     trans1.amount = 100;

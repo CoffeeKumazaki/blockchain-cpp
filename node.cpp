@@ -1,7 +1,7 @@
 /**
- * @file blockchain.cpp
+ * @file Node.cpp
  * @author Kohei Kumazaki 
- * @brief implement blockchain class
+ * @brief implement Node class
  * @version 0.1
  * @date 2018-10-23
  * 
@@ -13,9 +13,9 @@
 
 #include "sha256.h"
 #include "block.h"
-#include "blockchain.h"
+#include "node.h"
 
-CBlockchain::CBlockchain()
+CNode::CNode()
 : difficulty(4)
 {
     pendingTransactions.clear();
@@ -23,11 +23,11 @@ CBlockchain::CBlockchain()
     mineBlock();    
 }
 
-CBlockchain::~CBlockchain() {
+CNode::~CNode() {
 
 }
 
-CBlock CBlockchain::createGenesisBlock() {
+CBlock CNode::createGenesisBlock() {
 
     Transaction genesisTransaction;
     genesisTransaction.amount = 0;
@@ -42,11 +42,11 @@ CBlock CBlockchain::createGenesisBlock() {
     return genesisBlock;
 }
 
-int CBlockchain::getBlockHeight() {
+int CNode::getBlockHeight() {
     return chain.size();
 }
 
-CBlock* CBlockchain::getBlock(int index) {
+CBlock* CNode::getBlock(int index) {
 
     int height = getBlockHeight();
     if (IS_VALID(index, 0, height)) {
@@ -56,17 +56,17 @@ CBlock* CBlockchain::getBlock(int index) {
     return NULL;
 }
 
-void CBlockchain::broadcastTransaction(Transaction data){
+void CNode::broadcastTransaction(Transaction data){
 
     // 待機リストへ登録.
     pendingTransactions.push_back(data);
 }
 
-CBlock* CBlockchain::getLatestBlock() {
+CBlock* CNode::getLatestBlock() {
     return chain.empty() ? NULL : &chain.back();
 }
 
-void CBlockchain::mineBlock() {
+void CNode::mineBlock() {
 
     CBlock* pBlock = getLatestBlock();
     int index = pBlock ? pBlock->getIndex() + 1 : 0;
@@ -79,7 +79,7 @@ void CBlockchain::mineBlock() {
     }
 }
 
-bool CBlockchain::isChainValid() {
+bool CNode::isChainValid() {
 
     for(BV_IT it = chain.begin(), itEnd = chain.end(); it != itEnd; ++it) {
         CBlock curBlock = (*it);
@@ -98,7 +98,7 @@ bool CBlockchain::isChainValid() {
 }
 
 
-void CBlockchain::print() {
+void CNode::print() {
 
     for ( BV_IT it = chain.begin(), itEnd = chain.end(); it != itEnd; ++it  ) {
         CBlock block = (*it);

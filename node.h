@@ -1,7 +1,7 @@
 /**
- * @file blockchain.h
+ * @file node.h
  * @author Kohei Kumazaki 
- * @brief declear blockchain class
+ * @brief declear node class
  * @version 0.1
  * @date 2018-10-23
  * 
@@ -17,11 +17,11 @@
 #include "block.h"
 using namespace std;
 
-class CBlockchain {
+class CNode {
 
 public:
-    CBlockchain();
-    ~CBlockchain();
+    CNode();
+    ~CNode();
 
     void print();
 
