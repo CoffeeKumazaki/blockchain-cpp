@@ -12,14 +12,16 @@ int main(int argc, char** argv) {
     trans1.senderKey = "John";
     trans1.receiverKey = "Bob";
     trans1.timestamp = time(NULL);
-    chain.addBlock(trans1);
+    chain.broadcastTransaction(trans1);
 
     Transaction trans2;
     trans2.amount = 200;
     trans2.senderKey = "Alice";
     trans2.receiverKey = "Lisa";
     trans2.timestamp = time(NULL);
-    chain.addBlock(trans2);
+    chain.broadcastTransaction(trans2);
+
+    chain.mineBlock();
 
     chain.print();
 

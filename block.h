@@ -19,7 +19,7 @@ struct Transaction;
 class CBlock {
 
 public:
-    CBlock(int index, Transaction data, string prevHash);
+    CBlock(int index, string prevHash);
     ~CBlock();
 
     void print();
@@ -34,7 +34,7 @@ public:
     bool    isHashValid();
 
     // ブロックのマイニング.
-    void    mineBlock(int difficulty);
+    void    mineBlock(int difficulty, TLIST& pendingTransactions);
 
 private:
     string  generateHash();
@@ -43,6 +43,9 @@ private:
     int         index;      // ブロック番号.
     string      blockHash;  // ブロックのハッシュ値.
     string      prevHash;   // 前ブロックのハッシュ値.
-    Transaction transaction;// 含まれるトランザクションデータ.
+    TLIST       transactions;// 含まれるトランザクションデータ.
     uint64_t    nonce;      // マイニングのためのナンス値.
 };
+
+typedef vector<CBlock> BVECTOR;
+typedef vector<CBlock>::iterator BV_IT;

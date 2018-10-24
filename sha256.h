@@ -7,4 +7,6 @@
 
 using namespace std;
 
+#define INVALID_HASH ("0000000000000000000000000000000000000000000000000000000000000000")
+
 string sha256(const string str);

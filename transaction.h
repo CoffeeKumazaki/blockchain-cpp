@@ -29,6 +29,16 @@ struct Transaction {
         timestamp = 0;
     }
 
+    string getHashSeed() {
+        string toHash = 
+                to_string(amount) 
+                + senderKey 
+                + receiverKey 
+                + to_string(timestamp);
+
+        return toHash;
+    }
+
     void print() { 
         cout << " transaction -- " << endl;
         cout << "   amount      : " << amount << endl;
@@ -37,3 +47,6 @@ struct Transaction {
         cout << "   timestamp   : " << timestamp << endl;
     }
 };
+
+typedef list<Transaction> TLIST;
+typedef list<Transaction>::iterator TL_IT;

@@ -18,9 +18,9 @@
 CBlockchain::CBlockchain()
 : difficulty(4)
 {
-
+    pendingTransactions.clear();
     CBlock genesisBlock = createGenesisBlock();
-    chain.push_back(genesisBlock);
+    mineBlock();    
 }
 
 CBlockchain::~CBlockchain() {
@@ -36,8 +36,8 @@ CBlock CBlockchain::createGenesisBlock() {
     genesisTransaction.timestamp = time(NULL);
 
     hash<int> hash1;
-    CBlock genesisBlock(0, genesisTransaction, string(sha256("0").length(), '0'));
-    genesisBlock.mineBlock(difficulty);
+    CBlock genesisBlock(0, string(sha256("0").length(), '0'));
+    broadcastTransaction(genesisTransaction);
 
     return genesisBlock;
 }
@@ -56,24 +56,31 @@ CBlock* CBlockchain::getBlock(int index) {
     return NULL;
 }
 
-CBlock* CBlockchain::getLatestBlock() {
-    return &chain.back();
+void CBlockchain::broadcastTransaction(Transaction data){
+
+    // 待機リストへ登録.
+    pendingTransactions.push_back(data);
 }
 
-void CBlockchain::addBlock(Transaction data) {
+CBlock* CBlockchain::getLatestBlock() {
+    return chain.empty() ? NULL : &chain.back();
+}
 
-    int index = getLatestBlock()->getIndex() + 1;
-    CBlock newBlock(index, data, getLatestBlock()->getHash());
-    newBlock.mineBlock(difficulty);
+void CBlockchain::mineBlock() {
+
+    CBlock* pBlock = getLatestBlock();
+    int index = pBlock ? pBlock->getIndex() + 1 : 0;
+    CBlock newBlock(index, pBlock ? getLatestBlock()->getHash() : INVALID_HASH);
+    newBlock.mineBlock(difficulty, pendingTransactions);
 
     if (newBlock.isHashValid()) { 
+        pendingTransactions.clear();
         chain.push_back(newBlock);
     }
 }
 
 bool CBlockchain::isChainValid() {
 
-    
     for(BV_IT it = chain.begin(), itEnd = chain.end(); it != itEnd; ++it) {
         CBlock curBlock = (*it);
         // ブロックのハッシュ値が不正ならエラー.

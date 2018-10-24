@@ -14,12 +14,12 @@
 #include "block.h"
 #include "sha256.h"
 
-CBlock::CBlock(int _index, Transaction _data, string _prevHash)
+CBlock::CBlock(int _index, string _prevHash)
 : index(_index)
-, transaction(_data)
 , prevHash(_prevHash)
 , nonce(0)
 {
+    transactions.clear();
 }
 
 CBlock::~CBlock() {
@@ -32,12 +32,11 @@ string CBlock::generateHash() {
     hash<size_t> hash2;
     hash<size_t> finalHash; 
 
-    string toHash = 
-                to_string(transaction.amount) 
-                + transaction.senderKey 
-                + transaction.receiverKey 
-                + to_string(transaction.timestamp) 
-                + to_string(nonce);
+    string toHash = to_string(nonce);
+    for ( TL_IT it = transactions.begin(), itEnd = transactions.end(); it != itEnd; ++it) {
+        Transaction data = (*it);
+        toHash += data.getHashSeed();
+    }
 
     return sha256( toHash + prevHash );
 }
@@ -47,10 +46,12 @@ bool    CBlock::isHashValid() {
     return generateHash() == blockHash;
 }
 
-void  CBlock::mineBlock(int difficulty) {
+void  CBlock::mineBlock(int difficulty, TLIST& pendingTransactions) {
 
     string header(difficulty, '0');
     string finalHash;
+
+    transactions.assign(pendingTransactions.begin(), pendingTransactions.end());
 
     while ( finalHash.compare(0, difficulty, header) != 0 ) {
         nonce++;
@@ -67,5 +68,8 @@ void    CBlock::print() {
     cout << " index     : " << index << endl;
     cout << " prevHash  : " << prevHash << endl;
     cout << " blockHash : " << blockHash << endl;
-    transaction.print();
+    for ( TL_IT it = transactions.begin(), itEnd = transactions.end(); it != itEnd; ++it ) {
+        Transaction transaction = (*it);
+        transaction.print();
+    }
 }

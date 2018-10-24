@@ -17,11 +17,6 @@
 #include "block.h"
 using namespace std;
 
-typedef vector<CBlock> BVECTOR;
-typedef vector<CBlock>::iterator BV_IT;
-typedef list<Transaction> TLIST;
-typedef list<Transaction>::iterator TL_IT;
-
 class CBlockchain {
 
 public:
@@ -35,14 +30,17 @@ public:
     CBlock* getBlock(int index);        // 指定番号のブロック取得. 
     CBlock* getLatestBlock();           // 最新のブロック取得.
 
-    void addBlock(Transaction data);    // ブロックの追加.
+    void broadcastTransaction(Transaction data);    // トランザクションの発行.
+    void mineBlock();                   // ブロックの追加.
     bool isChainValid();                // 有効なチェーンかチェック.
 private:
     CBlock createGenesisBlock();
 
 public:
-    BVECTOR     chain;  // ブロックチェーン.
-    uint32_t    difficulty;
+    BVECTOR     chain;                  // ブロックチェーン.
+    TLIST       pendingTransactions;    // ブロック格納前のトランザクション.
+    uint32_t    difficulty;             // マイニングの難易度.
+
 
 private:
 
