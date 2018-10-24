@@ -74,7 +74,7 @@ void CBlockchain::addBlock(Transaction data) {
 bool CBlockchain::isChainValid() {
 
     
-    for(VIT_Block it = chain.begin(), itEnd = chain.end(); it != itEnd; ++it) {
+    for(BV_IT it = chain.begin(), itEnd = chain.end(); it != itEnd; ++it) {
         CBlock curBlock = (*it);
         // ブロックのハッシュ値が不正ならエラー.
         if ( curBlock.isHashValid() ) return false;
@@ -93,7 +93,7 @@ bool CBlockchain::isChainValid() {
 
 void CBlockchain::print() {
 
-    for ( VIT_Block it = chain.begin(), itEnd = chain.end(); it != itEnd; ++it  ) {
+    for ( BV_IT it = chain.begin(), itEnd = chain.end(); it != itEnd; ++it  ) {
         CBlock block = (*it);
         block.print();
     }

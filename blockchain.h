@@ -17,8 +17,10 @@
 #include "block.h"
 using namespace std;
 
-typedef vector<CBlock> VBlock;
-typedef vector<CBlock>::iterator VIT_Block;
+typedef vector<CBlock> BVECTOR;
+typedef vector<CBlock>::iterator BV_IT;
+typedef list<Transaction> TLIST;
+typedef list<Transaction>::iterator TL_IT;
 
 class CBlockchain {
 
@@ -39,7 +41,7 @@ private:
     CBlock createGenesisBlock();
 
 public:
-    VBlock      chain;  // ブロックチェーン.
+    BVECTOR     chain;  // ブロックチェーン.
     uint32_t    difficulty;
 
 private:
