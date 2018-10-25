@@ -42,10 +42,10 @@ private:
 
 public:
     BVECTOR     chain;                  // ブロックチェーン.
+
+private:
     TLIST       pendingTransactions;    // ブロック格納前のトランザクション.
     uint32_t    difficulty;             // マイニングの難易度.
     uint32_t    reward;                 // マイニングの報酬.
-
-private:
 
 };
