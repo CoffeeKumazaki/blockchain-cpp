@@ -31,16 +31,18 @@ public:
     CBlock* getLatestBlock();           // 最新のブロック取得.
 
     void broadcastTransaction(Transaction data);    // トランザクションの発行.
-    void mineBlock();                   // ブロックの追加.
+    void mineBlock(address miner);                  // ブロックの追加.
     bool isChainValid();                // 有効なチェーンかチェック.
 private:
-    CBlock createGenesisBlock();
+    CBlock createGenesisBlock();        // genesis blockの作成. 
+    void   generateRewardTransaction(address miner);    // 報酬トランザクションの発行.
+
 
 public:
     BVECTOR     chain;                  // ブロックチェーン.
     TLIST       pendingTransactions;    // ブロック格納前のトランザクション.
     uint32_t    difficulty;             // マイニングの難易度.
-
+    uint32_t    reward;                 // マイニングの報酬.
 
 private:
 

@@ -24,4 +24,6 @@
 
 using namespace std;
 
+typedef string address;
+
 #define IS_VALID(val, min, max) ( min <= val && val < max )

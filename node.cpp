@@ -17,6 +17,7 @@
 
 CNode::CNode()
 : difficulty(4)
+, reward(100)
 {
     pendingTransactions.clear();
     CBlock genesisBlock = createGenesisBlock();
@@ -43,6 +44,17 @@ CBlock CNode::createGenesisBlock() {
     return genesisBlock;
 }
 
+void CNode::generateRewardTransaction(address miner) {
+
+    Transaction rewardTransaction;
+    rewardTransaction.amount = reward;
+    rewardTransaction.senderKey = INVALID_HASH;
+    rewardTransaction.receiverKey = miner;
+    rewardTransaction.timestamp = time(NULL);
+
+    broadcastTransaction(rewardTransaction);
+}
+
 int CNode::getBlockHeight() {
     return chain.size();
 }
@@ -67,7 +79,7 @@ CBlock* CNode::getLatestBlock() {
     return chain.empty() ? NULL : &chain.back();
 }
 
-void CNode::mineBlock() {
+void CNode::mineBlock(address miner) {
 
     CBlock* pBlock = getLatestBlock();
     int index = pBlock->getIndex() + 1;
@@ -77,6 +89,7 @@ void CNode::mineBlock() {
     if (newBlock.isHashValid()) { 
         pendingTransactions.clear();
         chain.push_back(newBlock);
+        generateRewardTransaction(miner);
     }
 }
 

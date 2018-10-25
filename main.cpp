@@ -3,6 +3,7 @@
 #include "node.h"
 #include "sha256.h"
 
+
 int main(int argc, char** argv) {
 
     CNode  chain;
@@ -21,7 +22,8 @@ int main(int argc, char** argv) {
     trans2.timestamp = time(NULL);
     chain.broadcastTransaction(trans2);
 
-    chain.mineBlock();
+    chain.mineBlock("Mike");
+    chain.mineBlock("Mike");
 
     chain.print();
 
