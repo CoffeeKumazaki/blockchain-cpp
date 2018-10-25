@@ -50,3 +50,4 @@ struct Transaction {
 
 typedef list<Transaction> TLIST;
 typedef list<Transaction>::iterator TL_IT;
+typedef list<Transaction>::const_iterator TL_CIT;

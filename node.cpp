@@ -111,6 +111,29 @@ bool CNode::isChainValid() {
     
 }
 
+int  CNode::getBalance(address account) {
+
+    int balance = 0;
+
+    for (BV_CIT bit = chain.begin(), bitEnd = chain.end(); bit != bitEnd; ++bit ) {
+        const CBlock block = (*bit);
+        for ( TL_CIT tit = block.T_begin(), titEnd = block.T_end(); tit != titEnd; ++tit ) {
+            const Transaction transaction = (*tit);
+            if ( transaction.receiverKey == account ) {
+                balance += transaction.amount;
+            }
+            
+            if ( transaction.senderKey == account ) {
+                balance -= transaction.amount;
+            }
+        }
+
+    }
+
+    return balance;
+
+}
+
 
 void CNode::print() {
 

@@ -26,9 +26,11 @@ public:
 
 public:
     // getter.
-    int     getIndex()  { return index; }
-    string  getHash()   { return blockHash; }
-    string  getPrevHash() { return prevHash; }
+    int     getIndex()  const { return index; }
+    string  getHash()   const { return blockHash; }
+    string  getPrevHash() const { return prevHash; }
+    TL_CIT  T_begin()   const { return transactions.begin(); } 
+    TL_CIT  T_end()     const { return transactions.end(); }
 
     // Hashが有効かチェック.
     bool    isHashValid();
@@ -49,3 +51,4 @@ private:
 
 typedef vector<CBlock> BVECTOR;
 typedef vector<CBlock>::iterator BV_IT;
+typedef vector<CBlock>::const_iterator BV_CIT;

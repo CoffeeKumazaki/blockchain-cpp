@@ -33,6 +33,8 @@ public:
     void broadcastTransaction(Transaction data);    // トランザクションの発行.
     void mineBlock(address miner);                  // ブロックの追加.
     bool isChainValid();                // 有効なチェーンかチェック.
+    int  getBalance(address account);   // 残高照会.
+
 private:
     CBlock createGenesisBlock();        // genesis blockの作成. 
     void   generateRewardTransaction(address miner);    // 報酬トランザクションの発行.

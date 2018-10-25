@@ -23,7 +23,19 @@ int main(int argc, char** argv) {
     chain.broadcastTransaction(trans2);
 
     chain.mineBlock("Mike");
+
+    Transaction trans3;
+    trans3.amount = 30;
+    trans3.senderKey = "Mike";
+    trans3.receiverKey = "Lisa";
+    trans3.timestamp = time(NULL);
+    chain.broadcastTransaction(trans3);
+
     chain.mineBlock("Mike");
+
+    cout << "Bob's Balance : " << chain.getBalance("Bob") << endl;
+    cout << "Mike's Balance : " << chain.getBalance("Mike") << endl;
+    cout << "Lisa's Balance : " << chain.getBalance("Lisa") << endl;
 
     chain.print();
 
