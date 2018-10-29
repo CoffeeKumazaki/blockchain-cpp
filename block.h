@@ -34,6 +34,7 @@ public:
 
     // Hashが有効かチェック.
     bool    isHashValid();
+    bool    isValid();
 
     // ブロックのマイニング.
     void    mineBlock(int difficulty, TLIST& pendingTransactions);

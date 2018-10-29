@@ -72,7 +72,9 @@ CBlock* CNode::getBlock(int index) {
 void CNode::broadcastTransaction(Transaction data){
 
     // 待機リストへ登録.
-    pendingTransactions.push_back(data);
+    if (data.isValid()) {
+        pendingTransactions.push_back(data);
+    }
 }
 
 CBlock* CNode::getLatestBlock() {
@@ -97,8 +99,8 @@ bool CNode::isChainValid() {
 
     for(BV_IT it = chain.begin(), itEnd = chain.end(); it != itEnd; ++it) {
         CBlock curBlock = (*it);
-        // ブロックのハッシュ値が不正ならエラー.
-        if ( curBlock.isHashValid() ) return false;
+        // ブロックが不正ならエラー.
+        if ( curBlock.isValid() ) return false;
 
         if ( chain.size() > 1 ) {
             CBlock prevBlock = *(it - 1);

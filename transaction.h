@@ -23,8 +23,8 @@ struct Transaction {
     time_t timestamp;   // 送信時刻.
 
     Transaction();
-    string getHash();
-    bool isValid();
+    string getHash() const;
+    bool isValid() const;
 
     void print() { 
         cout << " transaction -- " << endl;

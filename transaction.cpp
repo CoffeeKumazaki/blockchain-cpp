@@ -20,7 +20,7 @@ Transaction::Transaction()  {
     timestamp = 0;
 }
 
-string Transaction::getHash() {
+string Transaction::getHash() const {
     string toHash = 
             to_string(amount) 
             + senderKey 
@@ -30,14 +30,16 @@ string Transaction::getHash() {
     return sha256(toHash);
 }
 
-bool Transaction::isValid() {
+bool Transaction::isValid() const {
 
     if ( senderKey == INVALID_HASH ) {
         // reward for mining.
         return true;
     }
 
+    if ( receiverKey.empty() || senderKey.empty() ) {
+        return false;
+    }
 
-
-    return false;
+    return true;
 }

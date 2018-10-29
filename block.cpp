@@ -46,13 +46,33 @@ bool    CBlock::isHashValid() {
     return generateHash() == blockHash;
 }
 
+bool    CBlock::isValid() {
+
+    if (!isHashValid()) {
+        return false;
+    }
+
+    for ( TL_CIT it = transactions.begin(), itEnd = transactions.end(); it != itEnd; ++it ) {
+        const Transaction data = (*it);
+        if (!data.isValid()) return false;
+    }
+
+    return true;
+}
+
+
 void  CBlock::mineBlock(int difficulty, TLIST& pendingTransactions) {
 
     string header(difficulty, '0');
     string finalHash;
 
-    transactions.assign(pendingTransactions.begin(), pendingTransactions.end());
-
+    transactions.clear();
+    for ( TL_CIT it = pendingTransactions.begin(), itEnd = pendingTransactions.end(); it != itEnd; ++it ) {
+        Transaction data = (*it);
+        if ( !data.isValid() ) continue;
+        transactions.push_back(data);
+    }
+    
     while ( finalHash.compare(0, difficulty, header) != 0 ) {
         nonce++;
         finalHash = generateHash();
