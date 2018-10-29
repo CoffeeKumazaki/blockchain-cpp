@@ -35,7 +35,7 @@ string CBlock::generateHash() {
     string toHash = to_string(nonce);
     for ( TL_IT it = transactions.begin(), itEnd = transactions.end(); it != itEnd; ++it) {
         Transaction data = (*it);
-        toHash += data.getHashSeed();
+        toHash += data.getHash();
     }
 
     return sha256( toHash + prevHash );

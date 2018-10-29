@@ -22,22 +22,9 @@ struct Transaction {
     string receiverKey; // 送信先.
     time_t timestamp;   // 送信時刻.
 
-    Transaction() {
-        amount = 0;
-        senderKey = "";
-        receiverKey = "";
-        timestamp = 0;
-    }
-
-    string getHashSeed() {
-        string toHash = 
-                to_string(amount) 
-                + senderKey 
-                + receiverKey 
-                + to_string(timestamp);
-
-        return toHash;
-    }
+    Transaction();
+    string getHash();
+    bool isValid();
 
     void print() { 
         cout << " transaction -- " << endl;
@@ -45,6 +32,7 @@ struct Transaction {
         cout << "   senderKey   : " << senderKey << endl;
         cout << "   receiverKey : " << receiverKey << endl;
         cout << "   timestamp   : " << timestamp << endl;
+        cout << "   hash        : " << getHash() << endl;
     }
 };
 
